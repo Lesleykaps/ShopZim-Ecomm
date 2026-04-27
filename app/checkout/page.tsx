@@ -88,11 +88,11 @@ export default function CheckoutPage() {
   };
 
   return (
-    <div className="max-w-6xl mx-auto px-4 md:px-6 py-10">
-      <h1 className="font-heading font-extrabold text-4xl md:text-5xl mb-8 text-ink tracking-tightest">Checkout</h1>
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-10 pb-24 md:pb-10">
+      <h1 className="font-heading font-extrabold text-3xl sm:text-4xl md:text-5xl mb-6 md:mb-8 text-ink tracking-tightest">Checkout</h1>
 
       {/* Stepper */}
-      <div className="flex items-center justify-between max-w-md mb-10">
+      <div className="flex items-center justify-between max-w-md mb-8 md:mb-10">
         {["Delivery", "Method", "Payment"].map((label, i) => {
           const n = i + 1;
           const done = step > n;
@@ -100,27 +100,27 @@ export default function CheckoutPage() {
           return (
             <div key={label} className="flex-1 flex items-center">
               <div className={cn(
-                "w-8 h-8 rounded-pill flex items-center justify-center text-xs font-bold border-2 transition-colors duration-150",
+                "w-7 h-7 md:w-9 md:h-9 rounded-pill flex items-center justify-center text-[11px] md:text-xs font-bold border-2 transition-colors duration-150 shrink-0",
                 done ? "bg-lime text-ink border-lime" : active ? "bg-white text-ink border-lime" : "bg-white text-muted2 border-border"
               )}>
-                {done ? <Check size={14} /> : n}
+                {done ? <Check size={12} /> : n}
               </div>
-              <div className="ml-2 mr-3 text-xs font-medium hidden sm:block">{label}</div>
-              {n < 3 && <div className={cn("flex-1 h-0.5", done ? "bg-lime" : "bg-border")} />}
+              <div className="ml-1.5 md:ml-2 mr-2 md:mr-3 text-[10px] md:text-xs font-medium">{label}</div>
+              {n < 3 && <div className={cn("flex-1 h-px md:h-0.5", done ? "bg-lime" : "bg-border")} />}
             </div>
           );
         })}
       </div>
 
-      <div className="grid lg:grid-cols-[1fr_360px] gap-8">
-        <div className="bg-white rounded-cardLg shadow-card p-6 md:p-8">
+      <div className="grid lg:grid-cols-[1fr_360px] gap-5 md:gap-8">
+        <div className="bg-white rounded-[16px] md:rounded-cardLg shadow-card p-5 md:p-8 order-2 lg:order-1">
           {step === 1 && (
             <form
               onSubmit={form.handleSubmit(() => setStep(2))}
               className="space-y-4"
             >
               <h2 className="font-heading font-bold text-2xl text-ink tracking-tighter2">Delivery Details</h2>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <Field label="First Name" {...form.register("firstName")} error={form.formState.errors.firstName?.message} />
                 <Field label="Last Name" {...form.register("lastName")} error={form.formState.errors.lastName?.message} />
               </div>
@@ -128,7 +128,7 @@ export default function CheckoutPage() {
               <Field label="Phone / WhatsApp" {...form.register("phone")} error={form.formState.errors.phone?.message} />
               <Field label="Address Line 1" {...form.register("addressLine1")} error={form.formState.errors.addressLine1?.message} />
               <Field label="Address Line 2 (optional)" {...form.register("addressLine2")} />
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <Label>City</Label>
                   <select
@@ -276,8 +276,12 @@ export default function CheckoutPage() {
           )}
         </div>
 
-        {/* Order summary */}
-        <aside className="bg-white rounded-cardLg shadow-card p-6 h-fit lg:sticky lg:top-24">
+        {/* Order summary — collapsible on mobile, sticky on desktop */}
+        <CollapsibleSummary
+          itemsCount={items.reduce((a, i) => a + i.quantity, 0)}
+          total={formatPrice(totals.total)}
+        >
+        <aside className="bg-white rounded-[16px] md:rounded-cardLg shadow-card p-5 md:p-6 h-fit lg:sticky lg:top-24">
           <div className="font-heading font-bold mb-4 text-ink tracking-tighter2">Order Summary</div>
           <div className="space-y-3 max-h-72 overflow-y-auto pr-1">
             {items.map((it) => (
@@ -310,7 +314,40 @@ export default function CheckoutPage() {
           </div>
           <Link href="/cart" className="text-xs text-ink font-semibold mt-3 inline-block underline underline-offset-2 hover:text-muted">Edit Cart</Link>
         </aside>
+        </CollapsibleSummary>
       </div>
+    </div>
+  );
+}
+
+function CollapsibleSummary({
+  children,
+  itemsCount,
+  total,
+}: {
+  children: React.ReactNode;
+  itemsCount: number;
+  total: string;
+}) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="order-1 lg:order-2">
+      {/* Mobile collapsible header */}
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        className="lg:hidden w-full bg-white rounded-[16px] shadow-card p-4 flex items-center justify-between mb-3"
+      >
+        <div className="text-left">
+          <div className="text-[11px] uppercase tracking-wider text-muted font-semibold">Order summary</div>
+          <div className="font-heading font-bold text-ink text-base mt-0.5">{itemsCount} items · {total}</div>
+        </div>
+        <span className={cn(
+          "w-8 h-8 rounded-pill bg-page flex items-center justify-center transition-transform duration-200",
+          open && "rotate-180"
+        )}>▾</span>
+      </button>
+      <div className={cn("lg:block", open ? "block" : "hidden")}>{children}</div>
     </div>
   );
 }

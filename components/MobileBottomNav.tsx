@@ -17,7 +17,7 @@ export default function MobileBottomNav() {
   const isActive = (href: string) => pathname === href;
 
   return (
-    <nav className="md:hidden fixed bottom-0 inset-x-0 z-40 glass rounded-t-[20px] h-[68px] flex items-stretch shadow-[0_-4px_20px_rgba(0,0,0,0.06)]">
+    <nav className="md:hidden fixed bottom-0 inset-x-0 z-50 bg-white border-t border-[#E2E8F0] h-16 flex items-stretch shadow-[0_-2px_10px_rgba(0,0,0,0.04)]">
       <Tab
         href="/"
         active={isActive("/")}

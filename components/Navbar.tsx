@@ -46,8 +46,8 @@ export default function Navbar() {
 
   return (
     <>
-      <div className="sticky top-3 z-40 mx-4 mt-3">
-        <header className="max-w-7xl mx-auto rounded-2xl shadow-glass border border-white/60 bg-white/[0.72] backdrop-blur-xl backdrop-saturate-150">
+      <div className="sticky top-0 z-40 md:top-3 md:mx-4 md:mt-3">
+        <header className="max-w-7xl mx-auto bg-white border-b border-border md:border md:border-white/60 md:rounded-2xl md:shadow-glass md:bg-white/[0.72] md:backdrop-blur-xl md:backdrop-saturate-150">
           <div className="h-14 md:h-[60px] flex items-center justify-between gap-3 px-4 md:px-5">
             {/* Mobile hamburger */}
             <button
@@ -58,10 +58,10 @@ export default function Navbar() {
               <Menu size={20} />
             </button>
 
-            {/* Logo */}
+            {/* Logo — centred on mobile, left on desktop */}
             <Link
               href="/"
-              className="font-heading font-extrabold text-ink text-[19px] md:text-[20px] tracking-tighter2 shrink-0"
+              className="font-heading font-extrabold text-ink text-base md:text-[20px] tracking-tighter2 shrink-0 absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0"
             >
               ShopZim
             </Link>
@@ -214,14 +214,15 @@ export default function Navbar() {
         )}
       </AnimatePresence>
 
-      {/* Mobile nav overlay */}
+      {/* Mobile nav overlay — white, full-screen, slides down from top */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-page"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.25, ease: [0.25, 0.1, 0.25, 1] }}
+            className="fixed inset-0 z-50 bg-white flex flex-col"
           >
             <div className="flex items-center justify-between p-5 border-b border-border">
               <span className="font-heading font-extrabold text-xl text-ink tracking-tighter2">
@@ -230,40 +231,47 @@ export default function Navbar() {
               <button
                 onClick={() => setMobileOpen(false)}
                 aria-label="Close"
-                className="w-10 h-10 bg-white rounded-pill flex items-center justify-center text-ink"
+                className="w-11 h-11 bg-page rounded-pill flex items-center justify-center text-ink"
               >
                 <X size={18} />
               </button>
             </div>
-            <nav className="p-6 flex flex-col gap-2 text-[22px] font-heading font-bold tracking-tighter2">
-              {links.map((l) => (
-                <Link
-                  key={l.href}
-                  href={l.href}
-                  onClick={() => setMobileOpen(false)}
-                  className={cn(
-                    "py-3 border-b border-border text-ink",
-                    l.sale && "text-lime"
-                  )}
+            <nav className="flex-1 px-6 pt-2">
+              {[...links, { href: "/wishlist", label: `Wishlist (${wishlistIds.length})` }, { href: "/about", label: "About" }].map((l, i) => (
+                <motion.div
+                  key={l.href + l.label}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.25, delay: 0.05 + i * 0.04, ease: [0.25, 0.1, 0.25, 1] }}
                 >
-                  {l.label}
-                </Link>
+                  <Link
+                    href={l.href}
+                    onClick={() => setMobileOpen(false)}
+                    className={cn(
+                      "block w-full py-4 border-b border-border font-heading font-bold text-xl tracking-tighter2",
+                      (l as { sale?: boolean }).sale ? "text-[#F97316]" : "text-ink"
+                    )}
+                  >
+                    {l.label}
+                  </Link>
+                </motion.div>
               ))}
-              <Link
-                href="/wishlist"
-                onClick={() => setMobileOpen(false)}
-                className="py-3 border-b border-border text-ink"
-              >
-                Wishlist ({wishlistIds.length})
-              </Link>
-              <Link
-                href="/about"
-                onClick={() => setMobileOpen(false)}
-                className="py-3 border-b border-border text-ink"
-              >
-                About
-              </Link>
             </nav>
+            <div className="px-6 py-6 border-t border-border">
+              <div className="flex gap-3">
+                {["Instagram", "Facebook", "WhatsApp"].map((s) => (
+                  <a
+                    key={s}
+                    href="#"
+                    aria-label={s}
+                    className="w-10 h-10 bg-page rounded-pill flex items-center justify-center text-ink hover:bg-lime transition-colors duration-150"
+                  >
+                    <span className="text-xs font-bold">{s[0]}</span>
+                  </a>
+                ))}
+              </div>
+              <div className="text-xs text-muted mt-4">© ShopZim {new Date().getFullYear()}</div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

@@ -48,9 +48,9 @@ export default function CartDrawer() {
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
-            className="absolute right-0 top-0 h-full w-full sm:w-[420px] glass sm:rounded-l-cardLg shadow-cardHover flex flex-col text-ink"
+            className="absolute right-0 top-0 h-full w-full md:w-[420px] bg-white md:glass md:rounded-l-cardLg shadow-cardHover flex flex-col text-ink"
           >
-            <div className="flex items-center justify-between p-5 border-b border-border">
+            <div className="sticky top-0 bg-white md:bg-transparent z-10 flex items-center justify-between p-4 md:p-5 border-b border-border">
               <div>
                 <div className="font-heading font-bold text-[20px] tracking-tighter2">
                   Your Cart
@@ -62,9 +62,9 @@ export default function CartDrawer() {
               <button
                 onClick={() => setOpen(false)}
                 aria-label="Close"
-                className="w-9 h-9 bg-page hover:bg-[#E5E5E5] rounded-pill flex items-center justify-center transition-colors duration-150"
+                className="w-11 h-11 bg-page hover:bg-[#E5E5E5] rounded-pill flex items-center justify-center transition-colors duration-150"
               >
-                <X size={16} />
+                <X size={18} />
               </button>
             </div>
 
@@ -103,7 +103,7 @@ export default function CartDrawer() {
                           className="flex gap-3 bg-white rounded-card p-3 shadow-soft"
                         >
                           <div
-                            className="w-[72px] h-[72px] rounded-[12px] shrink-0 shadow-soft relative overflow-hidden"
+                            className="w-16 h-16 md:w-[72px] md:h-[72px] rounded-[12px] shrink-0 shadow-soft relative overflow-hidden"
                             style={{
                               background: categoryGradient(it.product.category),
                             }}
@@ -112,7 +112,7 @@ export default function CartDrawer() {
                               src={productImage(it.product.slug, 144, 144)}
                               alt={it.product.name}
                               fill
-                              sizes="72px"
+                              sizes="64px"
                               className="object-cover"
                             />
                           </div>
@@ -150,10 +150,10 @@ export default function CartDrawer() {
                           </div>
                           <button
                             onClick={() => remove(k)}
-                            className="self-start text-muted2 hover:text-red-500 transition-colors duration-150"
+                            className="w-9 h-9 -m-1 flex items-start justify-end text-muted2 hover:text-red-500 transition-colors duration-150"
                             aria-label="Remove"
                           >
-                            <Trash2 size={15} />
+                            <Trash2 size={16} />
                           </button>
                         </motion.div>
                       );
@@ -171,19 +171,19 @@ export default function CartDrawer() {
                       </button>
                     ) : (
                       <div>
-                        <div className="flex items-center gap-2 bg-page rounded-pill pl-4 pr-1.5 py-1.5">
+                        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
                           <input
                             value={code}
                             onChange={(e) => setCode(e.target.value)}
                             placeholder="WELCOME10"
-                            className="flex-1 bg-transparent text-sm text-ink outline-none placeholder:text-muted2"
+                            className="flex-1 bg-page rounded-pill px-4 h-11 text-ink outline-none placeholder:text-muted2 border-0"
                           />
                           <button
                             onClick={() => {
                               const ok = applyPromo(code);
                               setPromoErr(ok ? null : "Invalid code");
                             }}
-                            className="bg-ink text-white text-sm font-semibold px-4 h-8 rounded-pill hover:bg-ink/90"
+                            className="bg-ink text-white text-sm font-semibold h-11 px-5 rounded-pill hover:bg-ink/90"
                           >
                             Apply
                           </button>
@@ -230,13 +230,13 @@ export default function CartDrawer() {
                   <Link
                     href="/checkout"
                     onClick={() => setOpen(false)}
-                    className="flex items-center justify-center gap-2 bg-lime hover:bg-limeHover text-ink font-bold py-3.5 rounded-pill transition-colors duration-150"
+                    className="flex items-center justify-center gap-2 bg-lime hover:bg-limeHover text-ink font-bold text-[15px] h-[52px] rounded-pill transition-colors duration-150"
                   >
                     Proceed to Checkout <ArrowRight size={16} />
                   </Link>
                   <button
                     onClick={() => setOpen(false)}
-                    className="w-full text-sm text-muted hover:text-ink transition-colors duration-150"
+                    className="w-full text-sm text-muted hover:text-ink transition-colors duration-150 py-3"
                   >
                     Continue Shopping
                   </button>

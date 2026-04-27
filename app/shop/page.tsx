@@ -74,20 +74,20 @@ function ShopInner() {
   }, [category, sale, sort]);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 md:px-6 py-8">
-      <div className="flex items-end justify-between gap-3 mb-6">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-8">
+      <div className="flex items-end justify-between gap-3 mb-5 md:mb-6">
         <div>
-          <h1 className="font-heading font-extrabold text-4xl md:text-5xl text-ink tracking-tightest">
+          <h1 className="font-heading font-extrabold text-3xl sm:text-4xl md:text-5xl text-ink tracking-tightest">
             Shop
           </h1>
-          <p className="text-sm text-muted mt-1">
+          <p className="text-xs md:text-sm text-muted mt-1">
             {filtered.length} product{filtered.length === 1 ? "" : "s"}
           </p>
         </div>
         <select
           value={sort}
           onChange={(e) => setParam("sort", e.target.value)}
-          className="bg-white rounded-pill px-4 py-2.5 text-sm text-ink shadow-soft border-none outline-none cursor-pointer hover:shadow-card transition-shadow duration-200"
+          className="bg-white rounded-pill px-3 md:px-4 h-10 md:h-11 text-xs md:text-sm text-ink shadow-soft border-none outline-none cursor-pointer hover:shadow-card transition-shadow duration-200 max-w-[160px] sm:max-w-none"
         >
           {SORTS.map((s) => (
             <option key={s.value} value={s.value}>
@@ -97,25 +97,27 @@ function ShopInner() {
         </select>
       </div>
 
-      {/* Filter pills */}
-      <div className="flex flex-wrap gap-2 mb-8">
-        {FILTERS.map((f) => {
-          const active = activeFilter === f.value;
-          return (
-            <button
-              key={f.value}
-              onClick={() => setFilter(f.value)}
-              className={cn(
-                "px-5 py-2.5 rounded-pill text-sm font-medium transition-all duration-150",
-                active
-                  ? "bg-ink text-white shadow-card"
-                  : "bg-white text-ink shadow-soft hover:shadow-card"
-              )}
-            >
-              {f.label}
-            </button>
-          );
-        })}
+      {/* Filter pills — horizontally scrollable on mobile */}
+      <div className="-mx-4 sm:mx-0 mb-6 md:mb-8">
+        <div className="flex gap-2 overflow-x-auto scrollbar-hide snap-x px-4 sm:px-0 sm:flex-wrap pb-1">
+          {FILTERS.map((f) => {
+            const active = activeFilter === f.value;
+            return (
+              <button
+                key={f.value}
+                onClick={() => setFilter(f.value)}
+                className={cn(
+                  "shrink-0 snap-start px-3 sm:px-5 py-2 sm:py-2.5 rounded-pill text-xs sm:text-sm font-medium transition-all duration-150 whitespace-nowrap",
+                  active
+                    ? "bg-lime text-ink shadow-card"
+                    : "bg-white text-ink shadow-soft hover:shadow-card"
+                )}
+              >
+                {f.label}
+              </button>
+            );
+          })}
+        </div>
       </div>
 
       {/* Grid */}
@@ -124,7 +126,7 @@ function ShopInner() {
           No products found. Try a different filter.
         </div>
       ) : (
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-5">
           {filtered.map((p, i) => (
             <motion.div
               key={p.id}

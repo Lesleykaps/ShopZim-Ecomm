@@ -48,8 +48,8 @@ export default function ProductDetail() {
   const savingsPct = onSale ? Math.round((savings / product.originalPrice!) * 100) : 0;
 
   return (
-    <div className="max-w-7xl mx-auto px-4 md:px-6 py-8">
-      <nav className="text-xs text-muted mb-4">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-8 pb-28 md:pb-10">
+      <nav className="text-[10px] sm:text-xs text-muted mb-4 truncate">
         <Link href="/" className="hover:text-ink">Home</Link>
         {" › "}
         <Link href={`/shop?category=${product.category}`} className="hover:text-ink capitalize">
@@ -59,10 +59,10 @@ export default function ProductDetail() {
         <span className="text-ink">{product.name}</span>
       </nav>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 lg:gap-10">
         {/* Gallery */}
         <div>
-          <div className="bg-white rounded-cardLg shadow-card p-4 md:p-6">
+          <div className="bg-white rounded-[16px] md:rounded-cardLg shadow-card p-3 md:p-6">
           <div className="aspect-[4/5] rounded-card overflow-hidden bg-surface2 relative">
             <div
               className="absolute inset-0"
@@ -92,7 +92,7 @@ export default function ProductDetail() {
               </span>
             )}
           </div>
-          <div className="mt-3 grid grid-cols-4 gap-2">
+          <div className="hidden md:grid mt-3 grid-cols-4 gap-2">
             {[0, 1, 2, 3].map((i) => (
               <button
                 key={i}
@@ -116,15 +116,15 @@ export default function ProductDetail() {
         </div>
 
         {/* Info */}
-        <div className="bg-white rounded-cardLg shadow-card p-5 md:p-8">
-          <h1 className="font-heading font-extrabold text-3xl md:text-4xl text-ink tracking-tightest leading-tight">{product.name}</h1>
+        <div className="bg-white rounded-[16px] md:rounded-cardLg shadow-card p-5 md:p-8">
+          <h1 className="font-heading font-extrabold text-xl md:text-3xl lg:text-4xl text-ink tracking-tightest leading-tight">{product.name}</h1>
           <div className="flex items-center gap-2 mt-2 text-sm">
             <Star size={14} className="fill-lime text-lime" />
             <span className="font-semibold text-ink">{product.rating}</span>
             <span className="text-muted">({product.reviews} reviews)</span>
           </div>
           <div className="mt-4 flex items-baseline gap-3">
-            <span className={cn("font-heading text-[32px] font-bold tracking-tighter2", onSale ? "text-ink" : "text-ink")}>{formatPrice(product.price)}</span>
+            <span className="font-heading text-2xl md:text-[32px] font-bold tracking-tighter2 text-ink">{formatPrice(product.price)}</span>
             {onSale && (
               <span className="text-muted line-through">{formatPrice(product.originalPrice!)}</span>
             )}
@@ -150,7 +150,7 @@ export default function ProductDetail() {
                   key={s}
                   onClick={() => setSize(s)}
                   className={cn(
-                    "px-4 py-2 rounded-pill border text-sm",
+                    "min-w-[44px] min-h-[44px] px-4 rounded-pill border text-sm font-medium transition-colors duration-150",
                     s === size ? "bg-lime text-ink border-lime" : "bg-page border-transparent text-ink hover:border-ink"
                   )}
                 >
@@ -172,7 +172,7 @@ export default function ProductDetail() {
                   key={c}
                   onClick={() => { setColour(c); setThumbIdx(i % 4); }}
                   className={cn(
-                    "w-9 h-9 rounded-pill border-2 flex items-center justify-center text-[10px] font-bold",
+                    "w-10 h-10 md:w-9 md:h-9 rounded-pill border-2 flex items-center justify-center text-[10px] font-bold",
                     c === colour ? "border-lime" : "border-border"
                   )}
                     style={{ background: categoryGradient(product.category), filter: `hue-rotate(${i * 30}deg)` }}
@@ -185,25 +185,25 @@ export default function ProductDetail() {
           </div>
 
           {/* Quantity */}
-          <div className="mt-5 flex items-center gap-3">
+          <div className="mt-5 flex flex-wrap items-center gap-3">
             <span className="text-sm text-muted">Qty:</span>
-            <div className="inline-flex items-center bg-page rounded-pill text-ink">
-              <button className="w-9 h-9 flex items-center justify-center hover:text-lime" onClick={() => setQty((q) => Math.max(1, q - 1))}>−</button>
-              <span className="px-2 font-bold min-w-[24px] text-center">{qty}</span>
-              <button className="w-9 h-9 flex items-center justify-center hover:text-lime" onClick={() => setQty((q) => Math.min(10, q + 1))}>+</button>
+            <div className="inline-flex items-center bg-page rounded-pill text-ink h-12">
+              <button className="w-12 h-12 flex items-center justify-center hover:text-lime" onClick={() => setQty((q) => Math.max(1, q - 1))} aria-label="Decrease">−</button>
+              <span className="px-3 font-bold min-w-[28px] text-center">{qty}</span>
+              <button className="w-12 h-12 flex items-center justify-center hover:text-lime" onClick={() => setQty((q) => Math.min(10, q + 1))} aria-label="Increase">+</button>
             </div>
             <span className="text-success text-xs font-bold tracking-wider inline-flex items-center gap-1"><span className="w-1.5 h-1.5 rounded-pill bg-success"/> In stock — only 4 left!</span>
           </div>
 
           {/* CTAs */}
-          <div className="mt-6 flex flex-col gap-2">
+          <div className="mt-6 flex flex-col gap-3">
             <button
               onClick={() => {
                 add(product, size, colour, qty);
                 push({ message: "✓ Added to cart", variant: "success" });
                 setDrawerOpen(true);
               }}
-              className="w-full bg-lime hover:bg-limeHover text-ink font-bold py-3.5 rounded-pill transition-colors duration-150"
+              className="w-full bg-lime hover:bg-limeHover text-ink font-bold h-[52px] rounded-pill transition-colors duration-150"
             >
               Add to Cart
             </button>
@@ -212,7 +212,7 @@ export default function ProductDetail() {
                 add(product, size, colour, qty);
                 router.push("/checkout");
               }}
-              className="w-full bg-ink hover:bg-ink/90 text-white font-bold py-3.5 rounded-pill transition-colors duration-150"
+              className="w-full bg-ink hover:bg-ink/90 text-white font-bold h-[52px] rounded-pill transition-colors duration-150"
             >
               Buy Now
             </button>
@@ -244,8 +244,8 @@ export default function ProductDetail() {
       </div>
 
       {/* Reviews */}
-      <section className="mt-16">
-        <h2 className="font-heading font-extrabold text-3xl text-ink tracking-tightest">Reviews</h2>
+      <section className="mt-10 md:mt-16">
+        <h2 className="font-heading font-extrabold text-2xl md:text-3xl text-ink tracking-tightest">Reviews</h2>
         <div className="mt-2 flex items-center gap-3">
           <div className="text-3xl font-bold text-ink">{product.rating}</div>
           <div className="flex">
@@ -279,20 +279,46 @@ export default function ProductDetail() {
             </div>
           ))}
         </div>
-        <button className="mt-4 bg-white rounded-pill px-5 py-2.5 text-sm font-semibold text-ink shadow-soft hover:shadow-card transition-shadow duration-200">
+        <button className="mt-4 w-full sm:w-auto bg-white rounded-pill px-5 h-12 text-sm font-semibold text-ink shadow-soft hover:shadow-card transition-shadow duration-200">
           Write a Review
         </button>
       </section>
 
       {/* Related */}
-      <section className="mt-16">
-        <h2 className="font-heading font-extrabold text-3xl mb-6 text-ink tracking-tightest">You Might Also Like</h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {related.map((p) => (
-            <ProductCard key={p.id} product={p} />
-          ))}
+      <section className="mt-10 md:mt-16">
+        <h2 className="font-heading font-extrabold text-2xl md:text-3xl mb-4 md:mb-6 text-ink tracking-tightest">You Might Also Like</h2>
+        {/* Mobile: peek scroll. Desktop: 4-col grid. */}
+        <div className="-mx-4 sm:mx-0">
+          <div className="flex sm:grid sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 overflow-x-auto sm:overflow-visible snap-x snap-mandatory scrollbar-hide px-4 sm:px-0">
+            {related.map((p) => (
+              <div
+                key={p.id}
+                className="snap-start shrink-0 w-[68%] sm:w-auto"
+              >
+                <ProductCard product={p} />
+              </div>
+            ))}
+          </div>
         </div>
       </section>
+
+      {/* Sticky mobile add-to-cart bar */}
+      <div className="md:hidden fixed bottom-16 inset-x-0 z-40 bg-white border-t border-[#E2E8F0] shadow-[0_-4px_16px_rgba(0,0,0,0.06)] h-[72px] flex items-center px-4 gap-3">
+        <div className="flex-1 min-w-0">
+          <div className="text-[10px] uppercase tracking-wider text-muted">Total</div>
+          <div className="font-heading font-bold text-ink text-lg tracking-tighter2">{formatPrice(product.price * qty)}</div>
+        </div>
+        <button
+          onClick={() => {
+            add(product, size, colour, qty);
+            push({ message: "✓ Added to cart", variant: "success" });
+            setDrawerOpen(true);
+          }}
+          className="shrink-0 bg-lime hover:bg-limeHover text-ink font-bold h-12 px-6 rounded-pill text-sm transition-colors duration-150"
+        >
+          Add to Cart
+        </button>
+      </div>
     </div>
   );
 }

@@ -16,8 +16,8 @@ export default function TrendingCarousel() {
   };
 
   return (
-    <div className="bg-white rounded-cardLg shadow-card p-5 md:p-7">
-      <div className="flex items-end justify-between mb-5 gap-4">
+    <div className="bg-white rounded-[14px] md:rounded-cardLg shadow-card p-4 md:p-7">
+      <div className="flex items-end justify-between mb-4 md:mb-5 gap-3">
         <div>
           <div className="text-[11px] tracking-[0.2em] text-muted font-semibold uppercase mb-1.5">
             Trending Now
@@ -29,20 +29,20 @@ export default function TrendingCarousel() {
         <div className="flex items-center gap-2">
           <Link
             href="/shop"
-            className="hidden md:inline text-sm font-semibold text-ink hover:text-muted transition-colors duration-150"
+            className="text-xs sm:text-sm font-semibold text-ink hover:text-muted transition-colors duration-150"
           >
             View All
           </Link>
           <button
             onClick={() => scroll(-1)}
-            className="w-10 h-10 rounded-pill bg-page hover:bg-[#E5E5E5] text-ink flex items-center justify-center transition-colors duration-150"
+            className="hidden md:flex w-10 h-10 rounded-pill bg-page hover:bg-[#E5E5E5] text-ink items-center justify-center transition-colors duration-150"
             aria-label="Scroll left"
           >
             <ChevronLeft size={16} />
           </button>
           <button
             onClick={() => scroll(1)}
-            className="w-10 h-10 rounded-pill bg-ink text-white hover:bg-ink/90 flex items-center justify-center transition-colors duration-150"
+            className="hidden md:flex w-10 h-10 rounded-pill bg-ink text-white hover:bg-ink/90 items-center justify-center transition-colors duration-150"
             aria-label="Scroll right"
           >
             <ChevronRight size={16} />
@@ -51,12 +51,13 @@ export default function TrendingCarousel() {
       </div>
       <div
         ref={ref}
-        className="flex gap-4 overflow-x-auto scrollbar-hide snap-x snap-mandatory pb-1 -mx-5 md:-mx-7 px-5 md:px-7"
+        className="flex gap-3 md:gap-4 overflow-x-auto scrollbar-hide snap-x snap-mandatory pb-1 -mx-4 md:-mx-7 px-4 md:px-7"
+        style={{ scrollSnapType: "x mandatory" }}
       >
         {items.map((p) => (
           <div
             key={p.id}
-            className="snap-start shrink-0 w-[68%] sm:w-[45%] md:w-[30%] lg:w-[23%]"
+            className="snap-start shrink-0 w-[78%] sm:w-[45%] md:w-[31%] lg:w-[23%]"
           >
             <ProductCard product={p} />
           </div>
