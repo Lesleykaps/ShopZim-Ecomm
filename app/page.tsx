@@ -57,7 +57,7 @@ export default function HomePage() {
             </span>
 
             <h1 className="mt-5 font-heading font-extrabold text-ink text-[44px] leading-[0.95] tracking-tightest">
-              Shop<br />Zimbabwe.<br />
+              Shop<br />Zim.<br />
               <span className="italic font-light">Shop Smart.</span>
             </h1>
 
