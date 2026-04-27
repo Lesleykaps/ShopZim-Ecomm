@@ -36,25 +36,112 @@ export default function HomePage() {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-10 space-y-3 sm:space-y-4 lg:space-y-5">
       {/* ROW 1: Hero + Side stack */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-4 lg:gap-5">
-        {/* HERO CARD */}
+        {/* HERO CARD — mobile (image-free, bold, e-commerce style) */}
         <motion.section
           {...fadeUp}
           transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
-          className="lg:col-span-8 bg-white rounded-[14px] md:rounded-cardLg shadow-card p-5 sm:p-7 md:p-10 relative overflow-hidden"
+          className="md:hidden lg:col-span-8 relative overflow-hidden rounded-[20px] shadow-card p-6 pb-7"
+          style={{
+            background:
+              "linear-gradient(135deg, #C8FF00 0%, #DDFF7A 55%, #F0FFB0 100%)",
+          }}
+        >
+          {/* Decorative orbs */}
+          <div className="absolute -top-16 -right-16 w-56 h-56 rounded-pill bg-white/40 blur-3xl pointer-events-none" />
+          <div className="absolute -bottom-20 -left-12 w-48 h-48 rounded-pill bg-ink/5 blur-3xl pointer-events-none" />
+
+          <div className="relative">
+            <span className="inline-flex items-center gap-1.5 bg-ink/90 text-white rounded-pill px-3 py-1 text-[10px] font-bold tracking-wider uppercase">
+              <span className="w-1.5 h-1.5 rounded-pill bg-lime animate-pulse" />
+              New Season · 2026
+            </span>
+
+            <h1 className="mt-5 font-heading font-extrabold text-ink text-[44px] leading-[0.95] tracking-tightest">
+              Shop<br />Zimbabwe.<br />
+              <span className="italic font-light">Shop Smart.</span>
+            </h1>
+
+            <p className="mt-4 text-sm text-ink/80 max-w-[28ch]">
+              Fashion, beauty &amp; home goods — delivered nationwide with EcoCash, OneMoney &amp; card.
+            </p>
+
+            {/* Stats row */}
+            <div className="mt-5 flex items-center gap-3">
+              <div className="flex items-center gap-1 bg-white/70 backdrop-blur-sm rounded-pill px-3 py-1.5">
+                <Star size={12} className="fill-ink text-ink" />
+                <span className="text-xs font-bold text-ink">4.9</span>
+                <span className="text-[10px] text-ink/60">· 12k</span>
+              </div>
+              <div className="bg-white/70 backdrop-blur-sm rounded-pill px-3 py-1.5">
+                <span className="text-xs font-bold text-ink">460+</span>
+                <span className="text-[10px] text-ink/60 ml-1">products</span>
+              </div>
+              <div className="bg-white/70 backdrop-blur-sm rounded-pill px-3 py-1.5">
+                <span className="text-xs font-bold text-ink">🇿🇼</span>
+                <span className="text-[10px] text-ink/60 ml-1">Local</span>
+              </div>
+            </div>
+
+            {/* Primary + secondary CTA */}
+            <div className="mt-6 flex items-center gap-3">
+              <Link
+                href="/shop"
+                className="flex-1 inline-flex items-center justify-between gap-2 bg-ink hover:bg-ink/90 text-white font-bold pl-5 pr-1.5 h-12 rounded-pill text-sm transition-colors duration-150"
+              >
+                Shop Now
+                <span className="w-9 h-9 bg-lime rounded-pill flex items-center justify-center text-ink">
+                  <ArrowRight size={16} />
+                </span>
+              </Link>
+              <Link
+                href="/shop?sale=true"
+                className="text-sm font-bold text-ink underline underline-offset-4 decoration-2"
+              >
+                Sale
+              </Link>
+            </div>
+
+            {/* Quick-shop category chips */}
+            <div className="mt-5 -mx-6 px-6 overflow-x-auto scrollbar-hide">
+              <div className="flex gap-2 w-max">
+                {[
+                  ["Women's", "/shop?category=women", "👗"],
+                  ["Men's", "/shop?category=men", "👔"],
+                  ["Beauty", "/shop?category=beauty", "💄"],
+                  ["Home", "/shop?category=home", "🏠"],
+                  ["New", "/shop?sort=newest", "✨"],
+                ].map(([label, href, emoji]) => (
+                  <Link
+                    key={label}
+                    href={href}
+                    className="shrink-0 bg-white/80 backdrop-blur-sm hover:bg-white text-ink rounded-pill px-3.5 py-2 text-xs font-semibold inline-flex items-center gap-1.5 transition-colors duration-150"
+                  >
+                    <span>{emoji}</span>
+                    {label}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+        </motion.section>
+
+        {/* HERO CARD — desktop (md+) */}
+        <motion.section
+          {...fadeUp}
+          transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
+          className="hidden md:block lg:col-span-8 bg-white rounded-cardLg shadow-card p-7 md:p-10 relative overflow-hidden"
         >
           <div className="absolute -top-20 -right-20 w-72 h-72 orb-lime pointer-events-none" />
-          <div className="grid grid-cols-1 md:grid-cols-[1.2fr_1fr] gap-6 items-center relative">
-            {/* Left */}
-            <div className="text-center md:text-left">
+          <div className="grid md:grid-cols-[1.2fr_1fr] gap-6 items-center relative">
+            <div>
               <span className="inline-flex items-center gap-1.5 bg-page rounded-pill px-3 py-1.5 text-[12px] font-medium text-ink">
                 🛍️ Style is Everything
               </span>
-              <h1 className="mt-4 sm:mt-5 font-heading font-extrabold text-ink text-3xl sm:text-4xl md:text-5xl lg:text-[56px] leading-[1.05] tracking-tightest">
+              <h1 className="mt-5 font-heading font-extrabold text-ink text-4xl md:text-5xl lg:text-[56px] leading-[1.05] tracking-tightest">
                 Discover.<br />Inspiring.<br />Fashion.
               </h1>
 
-              {/* "01 / Premium Style" — desktop only */}
-              <div className="mt-6 hidden md:flex items-start gap-4">
+              <div className="mt-6 flex items-start gap-4">
                 <div className="font-heading text-[48px] text-muted2/60 leading-none font-bold">
                   01
                 </div>
@@ -68,24 +155,22 @@ export default function HomePage() {
                 </div>
               </div>
 
-              <div className="mt-6 sm:mt-7 flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+              <div className="mt-7 flex items-center gap-2">
                 <Link
                   href="/shop"
-                  className="inline-flex items-center justify-center gap-2 bg-lime hover:bg-limeHover text-ink font-bold px-5 h-12 rounded-pill text-sm transition-colors duration-150"
+                  className="inline-flex items-center gap-2 bg-lime hover:bg-limeHover text-ink font-bold px-5 h-12 rounded-pill text-sm transition-colors duration-150"
                 >
                   View All Products
-                  <ArrowRight size={16} className="sm:hidden" />
                 </Link>
                 <Link
                   href="/shop"
                   aria-label="Go"
-                  className="hidden sm:flex w-12 h-12 bg-ink text-white hover:bg-ink/90 rounded-pill items-center justify-center transition-colors duration-150"
+                  className="w-12 h-12 bg-ink text-white hover:bg-ink/90 rounded-pill flex items-center justify-center transition-colors duration-150"
                 >
                   <ArrowRight size={16} />
                 </Link>
               </div>
 
-              {/* Social row — desktop only */}
               <div className="mt-8 hidden lg:flex items-center gap-4">
                 <span className="text-xs text-muted">Follow us on:</span>
                 <div className="flex gap-2">
@@ -102,8 +187,8 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Right: floating product */}
-            <div className="relative h-[260px] sm:h-[320px] md:h-[380px] overflow-hidden lg:overflow-visible mx-auto w-3/5 md:w-auto md:mx-0">
+            {/* Right: floating product (desktop only) */}
+            <div className="relative h-[320px] md:h-[380px] overflow-visible">
               <motion.div
                 initial={{ scale: 0.92, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
@@ -115,32 +200,34 @@ export default function HomePage() {
                 initial={{ y: 12, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
-                className="absolute inset-x-4 top-2 lg:-top-10 bottom-4 product-float"
+                className="absolute inset-x-4 -top-10 bottom-4 product-float"
               >
                 <Image
                   src={productImage(featured.slug, 800, 1000)}
                   alt={featured.name}
                   fill
-                  sizes="(max-width: 768px) 60vw, 40vw"
+                  sizes="40vw"
                   className="object-contain"
                   priority
                 />
               </motion.div>
-              {/* Floating dots — smaller on mobile */}
               <motion.div
                 animate={{ y: [0, -8, 0] }}
                 transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute top-4 left-4 sm:top-6 sm:left-8 rounded-pill bg-lime shadow-soft w-1.5 h-1.5 sm:w-2.5 sm:h-2.5"
+                className="absolute top-6 left-8 rounded-pill bg-lime shadow-soft"
+                style={{ width: 10, height: 10 }}
               />
               <motion.div
                 animate={{ y: [0, -8, 0] }}
                 transition={{ duration: 3, delay: 0.6, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute bottom-10 right-4 sm:bottom-14 sm:right-6 rounded-pill bg-[#2563EB] w-[5px] h-[5px] sm:w-[7px] sm:h-[7px]"
+                className="absolute bottom-14 right-6 rounded-pill bg-[#2563EB]"
+                style={{ width: 7, height: 7 }}
               />
               <motion.div
                 animate={{ y: [0, -8, 0] }}
                 transition={{ duration: 3, delay: 1.2, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute top-14 right-6 sm:top-20 sm:right-12 rounded-pill bg-muted2 w-1 h-1 sm:w-[5px] sm:h-[5px]"
+                className="absolute top-20 right-12 rounded-pill bg-muted2"
+                style={{ width: 5, height: 5 }}
               />
             </div>
           </div>
