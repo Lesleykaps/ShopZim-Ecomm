@@ -18,7 +18,7 @@ import {
 } from "lucide-react";
 import TrendingCarousel from "@/components/home/TrendingCarousel";
 import { products } from "@/lib/products";
-import { categoryGradient, formatPrice, productImage, themedImage } from "@/lib/utils";
+import { categoryGradient, formatPrice, productImage } from "@/lib/utils";
 
 const bentoFade = {
   initial: { opacity: 0, y: 16 },
@@ -102,38 +102,48 @@ export default function HomePage() {
             </div>
 
             {/* Right: floating product */}
-            <div className="relative h-[320px] md:h-[380px]">
+            <div className="relative h-[320px] md:h-[380px] overflow-visible">
               <motion.div
                 initial={{ scale: 0.92, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
-                className="absolute inset-0 rounded-cardLg overflow-hidden"
+                className="absolute inset-0 rounded-cardLg"
                 style={{ background: categoryGradient(featured.category) }}
+              />
+              {/* Product image overflows the card upward for a 3D float effect */}
+              <motion.div
+                initial={{ y: 12, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+                className="absolute inset-x-4 -top-10 bottom-4 product-float"
               >
                 <Image
                   src={productImage(featured.slug, 800, 1000)}
                   alt={featured.name}
                   fill
                   sizes="(max-width: 768px) 100vw, 40vw"
-                  className="object-cover"
+                  className="object-contain"
                   priority
                 />
               </motion.div>
-              {/* Floating dots */}
+              {/* Floating decorative dots — lime 10px, blue 7px, grey 5px */}
               <motion.div
                 animate={{ y: [0, -8, 0] }}
-                transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute top-6 left-8 w-3 h-3 rounded-pill bg-lime shadow-soft"
+                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute top-6 left-8 rounded-pill bg-lime shadow-soft"
+                style={{ width: 10, height: 10 }}
               />
               <motion.div
-                animate={{ y: [0, -6, 0] }}
-                transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute bottom-14 right-6 w-2.5 h-2.5 rounded-pill bg-[#2563EB]"
+                animate={{ y: [0, -8, 0] }}
+                transition={{ duration: 3, delay: 0.6, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute bottom-14 right-6 rounded-pill bg-[#2563EB]"
+                style={{ width: 7, height: 7 }}
               />
               <motion.div
-                animate={{ y: [0, -10, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute top-20 right-12 w-2 h-2 rounded-pill bg-muted2"
+                animate={{ y: [0, -8, 0] }}
+                transition={{ duration: 3, delay: 1.2, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute top-20 right-12 rounded-pill bg-muted2"
+                style={{ width: 5, height: 5 }}
               />
 
               {/* Colour swatches */}
@@ -379,7 +389,7 @@ export default function HomePage() {
             <div className="font-heading font-bold text-white tracking-tighter2 line-clamp-1">
               {trending3.name}
             </div>
-            <div className="text-xs text-white/70">Boosted with bass</div>
+            <div className="text-xs text-white/70">Hand-poured, natural wax</div>
           </div>
         </motion.div>
       </div>
@@ -417,23 +427,11 @@ export default function HomePage() {
               className="group block relative overflow-hidden rounded-card aspect-[4/5] shadow-card"
               style={{ background: categoryGradient(cat) }}
             >
-              <Image
-                src={themedImage(
-                  cat === "women" ? "fashion,woman,style" :
-                  cat === "men" ? "menswear,man,fashion" :
-                  cat === "home" ? "interior,home,decor" :
-                  "beauty,cosmetics,skincare",
-                  cat,
-                  900,
-                  1100
-                )}
-                alt={label}
-                fill
-                sizes="(max-width: 1024px) 50vw, 25vw"
-                className="object-cover group-hover:scale-105 transition-transform duration-500"
-              />
-              <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/60 to-transparent flex items-end justify-between">
-                <div className="font-heading font-extrabold text-white text-xl md:text-2xl tracking-tighter2">
+              {/* Decorative blur orbs to add depth on the gradient */}
+              <div className="absolute -top-10 -right-10 w-40 h-40 rounded-pill bg-white/40 blur-3xl group-hover:scale-110 transition-transform duration-500" />
+              <div className="absolute -bottom-12 -left-8 w-32 h-32 rounded-pill bg-white/30 blur-3xl" />
+              <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/30 to-transparent flex items-end justify-between">
+                <div className="font-heading font-extrabold text-ink text-xl md:text-2xl tracking-tighter2 drop-shadow">
                   {label}
                 </div>
                 <span className="w-9 h-9 bg-white rounded-pill flex items-center justify-center text-ink opacity-0 translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200">

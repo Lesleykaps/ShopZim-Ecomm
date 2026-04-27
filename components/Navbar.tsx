@@ -46,8 +46,8 @@ export default function Navbar() {
 
   return (
     <>
-      <div className="sticky top-4 z-40 px-4 md:px-5">
-        <header className="max-w-7xl mx-auto glass rounded-[16px] shadow-glass">
+      <div className="sticky top-3 z-40 mx-4 mt-3">
+        <header className="max-w-7xl mx-auto rounded-2xl shadow-glass border border-white/60 bg-white/[0.72] backdrop-blur-xl backdrop-saturate-150">
           <div className="h-14 md:h-[60px] flex items-center justify-between gap-3 px-4 md:px-5">
             {/* Mobile hamburger */}
             <button
