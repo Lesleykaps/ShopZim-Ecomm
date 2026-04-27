@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+html, body {
+  background: #F0F0F0;
+  color: #1A1A1A;
+  font-family: var(--font-inter), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+* { box-sizing: border-box; }
+
+input, select, textarea { font-size: 16px; }
+
+::selection { background: #C8FF00; color: #1A1A1A; }
+
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+@media (max-width: 767px) {
+  body { padding-bottom: 80px; }
+}
+
+.shimmer {
+  position: relative;
+  overflow: hidden;
+  background: #E5E5E5;
+}
+.shimmer::after {
+  content: "";
+  position: absolute; inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.7), transparent);
+  animation: shimmer 1.5s infinite;
+}
+
+/* Glass card surface */
+.glass {
+  background: rgba(255,255,255,0.72);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.6);
+}
+
+/* Soft gradient orb for background accents */
+.orb-lime {
+  background: radial-gradient(circle at center, rgba(200,255,0,0.35) 0%, rgba(200,255,0,0) 70%);
+  filter: blur(40px);
+}
+
+/* Drop shadow for floating products */
+.product-float {
+  filter: drop-shadow(0 20px 30px rgba(0,0,0,0.15));
+}
